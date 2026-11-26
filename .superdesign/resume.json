@@ -1,0 +1,222 @@
+{
+  "schemaVersion": 1,
+  "targets": {
+    "hari-ini": {
+      "targetKind": "existing-ui",
+      "projectId": "8f74864c-b440-4a1b-a108-33ff653c825b",
+      "baselineDraftId": "56bd257a-c725-43bc-9de6-d442e8003fc2",
+      "activeDraftId": "56bd257a-c725-43bc-9de6-d442e8003fc2",
+      "designSystemPath": ".superdesign/design-system.md",
+      "contextFiles": [
+        ".superdesign/design-system.md",
+        "App.tsx",
+        "src/navigation/RootTabs.tsx",
+        "src/components/SyncStatusHeader.tsx",
+        "src/screens/TodayScreen.tsx",
+        "src/theme/useTheme.ts",
+        "src/utils/formatters.ts",
+        "global.css",
+        "tailwind.config.js"
+      ],
+      "fingerprints": {
+        ".superdesign/design-system.md": "c0f86c8de021404cc94de98cee8d7301432294522987c2fa554aba8eceac1db4",
+        "App.tsx": "8d03107bec0b4edb8778b2ee3b4da191e35a03d1f80ce7438bb82288435ff818",
+        "src/navigation/RootTabs.tsx": "a0345f94cf519c33255af1a8bb0802b7118a986835feed0c225ff6f90e45c8b5",
+        "src/components/SyncStatusHeader.tsx": "1a9fe1d188c13de952858104315936bcb8d87d3cc19b318b627c264574a4e052",
+        "src/screens/TodayScreen.tsx": "15f15f02f8c6a386b3136a3a2923279af3e76ca68b6106b9899dfb469604fec8",
+        "src/theme/useTheme.ts": "3d9153d63ae1622b2e5d491c71ba39393c4dc246a703c3fbbb2228dd42664bb8",
+        "src/utils/formatters.ts": "4fb1d6e54b7381bc1c605e4b5b0d6df124b19c0dac27d63815be0696c4e4e20f",
+        "global.css": "cc1a7ad0d019ddb1d32d0ecb588ba0ac26ce41d8625dd6c366348b25f83a28ec",
+        "tailwind.config.js": "69c591e38f3a43e533dccbf5dd2c9b807e097dd04cc8543b4838773e61d79036"
+      },
+      "components": [
+        {
+          "name": "ScreenHeader",
+          "id": "924bbfa5-6fa3-45c0-b21e-38c3766c282a",
+          "sourcePath": "src/components/SyncStatusHeader.tsx"
+        },
+        {
+          "name": "BottomTabBar",
+          "id": "5067886c-6ad3-44a9-9e8f-6df18945c911",
+          "sourcePath": "src/navigation/RootTabs.tsx"
+        }
+      ],
+      "drafts": {
+        "56bd257a-c725-43bc-9de6-d442e8003fc2": {
+          "title": "TodayScreen Dark Mode",
+          "visualDirection": "linear-things3-neutral-compact",
+          "currentVersion": 5
+        },
+        "8f5f89b4-086a-423a-885a-bae1f45a5dae": {
+          "title": "Hari Ini - SpaceX Cockpit UI",
+          "visualDirection": "spacex-dragon-crew-cockpit",
+          "parentDraftId": "56bd257a-c725-43bc-9de6-d442e8003fc2",
+          "currentVersion": 1
+        }
+      },
+      "updatedAt": "2026-11-26T09:56:30.566Z"
+    },
+    "tugasan": {
+      "targetKind": "new-ui",
+      "projectId": "8f74864c-b440-4a1b-a108-33ff653c825b",
+      "activeDraftId": "1fb60cff-619d-4814-b9f0-e680b0dc5b13",
+      "sourceTarget": "hari-ini",
+      "sourceDraftId": "8f5f89b4-086a-423a-885a-bae1f45a5dae",
+      "designSystemPath": ".superdesign/design-system.md",
+      "contextFiles": [
+        ".superdesign/design-system.md",
+        "App.tsx",
+        "src/navigation/RootTabs.tsx",
+        "src/components/SyncStatusHeader.tsx",
+        "src/components/DatePickerField.tsx",
+        "src/screens/TasksScreen.tsx",
+        "src/screens/SubscriptionsScreen.tsx",
+        "src/screens/DiaryScreen.tsx",
+        "src/theme/useTheme.ts",
+        "src/utils/formatters.ts",
+        "tailwind.config.js"
+      ],
+      "fingerprints": {
+        ".superdesign/design-system.md": "c0f86c8de021404cc94de98cee8d7301432294522987c2fa554aba8eceac1db4",
+        "App.tsx": "8d03107bec0b4edb8778b2ee3b4da191e35a03d1f80ce7438bb82288435ff818",
+        "src/navigation/RootTabs.tsx": "a0345f94cf519c33255af1a8bb0802b7118a986835feed0c225ff6f90e45c8b5",
+        "src/components/SyncStatusHeader.tsx": "1a9fe1d188c13de952858104315936bcb8d87d3cc19b318b627c264574a4e052",
+        "src/components/DatePickerField.tsx": "97cafa5541ec3581ca91e0485d82c79cc2dca7c1c85cec9a535b76dd74ee466f",
+        "src/screens/TasksScreen.tsx": "eef525a18b5a7f395290809312ef8f7da929719f3dd9cb94b48094237e036b83",
+        "src/screens/SubscriptionsScreen.tsx": "62283a4df3efabe42f529b86d1fd294c273164d64e71b2711cf2fe4a9e25fbcc",
+        "src/screens/DiaryScreen.tsx": "5703fbb0fdc5607eb8496775f10fece0d04288c98ceccdb3eb3100aed0121b7a",
+        "src/theme/useTheme.ts": "3d9153d63ae1622b2e5d491c71ba39393c4dc246a703c3fbbb2228dd42664bb8",
+        "src/utils/formatters.ts": "4fb1d6e54b7381bc1c605e4b5b0d6df124b19c0dac27d63815be0696c4e4e20f",
+        "tailwind.config.js": "69c591e38f3a43e533dccbf5dd2c9b807e097dd04cc8543b4838773e61d79036"
+      },
+      "components": [
+        {
+          "name": "ScreenHeader",
+          "id": "924bbfa5-6fa3-45c0-b21e-38c3766c282a",
+          "sourcePath": "src/components/SyncStatusHeader.tsx"
+        },
+        {
+          "name": "BottomTabBar",
+          "id": "5067886c-6ad3-44a9-9e8f-6df18945c911",
+          "sourcePath": "src/navigation/RootTabs.tsx"
+        }
+      ],
+      "drafts": {
+        "1fb60cff-619d-4814-b9f0-e680b0dc5b13": {
+          "title": "Tugasan — SpaceX Cockpit",
+          "visualDirection": "linear-things3-neutral-compact",
+          "currentVersion": 2
+        }
+      },
+      "updatedAt": "2026-11-26T09:14:02.652Z"
+    },
+    "langganan": {
+      "targetKind": "new-ui",
+      "projectId": "8f74864c-b440-4a1b-a108-33ff653c825b",
+      "activeDraftId": "6ceffe2f-84bd-42d3-9fde-754ee13fd2bf",
+      "sourceTarget": "hari-ini",
+      "sourceDraftId": "8f5f89b4-086a-423a-885a-bae1f45a5dae",
+      "designSystemPath": ".superdesign/design-system.md",
+      "contextFiles": [
+        ".superdesign/design-system.md",
+        "App.tsx",
+        "src/navigation/RootTabs.tsx",
+        "src/components/SyncStatusHeader.tsx",
+        "src/components/DatePickerField.tsx",
+        "src/screens/TasksScreen.tsx",
+        "src/screens/SubscriptionsScreen.tsx",
+        "src/screens/DiaryScreen.tsx",
+        "src/theme/useTheme.ts",
+        "src/utils/formatters.ts",
+        "tailwind.config.js"
+      ],
+      "fingerprints": {
+        ".superdesign/design-system.md": "c0f86c8de021404cc94de98cee8d7301432294522987c2fa554aba8eceac1db4",
+        "App.tsx": "8d03107bec0b4edb8778b2ee3b4da191e35a03d1f80ce7438bb82288435ff818",
+        "src/navigation/RootTabs.tsx": "a0345f94cf519c33255af1a8bb0802b7118a986835feed0c225ff6f90e45c8b5",
+        "src/components/SyncStatusHeader.tsx": "1a9fe1d188c13de952858104315936bcb8d87d3cc19b318b627c264574a4e052",
+        "src/components/DatePickerField.tsx": "97cafa5541ec3581ca91e0485d82c79cc2dca7c1c85cec9a535b76dd74ee466f",
+        "src/screens/TasksScreen.tsx": "eef525a18b5a7f395290809312ef8f7da929719f3dd9cb94b48094237e036b83",
+        "src/screens/SubscriptionsScreen.tsx": "62283a4df3efabe42f529b86d1fd294c273164d64e71b2711cf2fe4a9e25fbcc",
+        "src/screens/DiaryScreen.tsx": "5703fbb0fdc5607eb8496775f10fece0d04288c98ceccdb3eb3100aed0121b7a",
+        "src/theme/useTheme.ts": "3d9153d63ae1622b2e5d491c71ba39393c4dc246a703c3fbbb2228dd42664bb8",
+        "src/utils/formatters.ts": "4fb1d6e54b7381bc1c605e4b5b0d6df124b19c0dac27d63815be0696c4e4e20f",
+        "tailwind.config.js": "69c591e38f3a43e533dccbf5dd2c9b807e097dd04cc8543b4838773e61d79036"
+      },
+      "components": [
+        {
+          "name": "ScreenHeader",
+          "id": "924bbfa5-6fa3-45c0-b21e-38c3766c282a",
+          "sourcePath": "src/components/SyncStatusHeader.tsx"
+        },
+        {
+          "name": "BottomTabBar",
+          "id": "5067886c-6ad3-44a9-9e8f-6df18945c911",
+          "sourcePath": "src/navigation/RootTabs.tsx"
+        }
+      ],
+      "drafts": {
+        "6ceffe2f-84bd-42d3-9fde-754ee13fd2bf": {
+          "title": "Langganan — SpaceX Cockpit UI",
+          "visualDirection": "linear-things3-neutral-compact",
+          "currentVersion": 2
+        }
+      },
+      "updatedAt": "2026-11-26T09:14:06.230Z"
+    },
+    "diari": {
+      "targetKind": "new-ui",
+      "projectId": "8f74864c-b440-4a1b-a108-33ff653c825b",
+      "activeDraftId": "6b554a49-29ed-4b9d-9652-bb8e20ca6733",
+      "sourceTarget": "hari-ini",
+      "sourceDraftId": "8f5f89b4-086a-423a-885a-bae1f45a5dae",
+      "designSystemPath": ".superdesign/design-system.md",
+      "contextFiles": [
+        ".superdesign/design-system.md",
+        "App.tsx",
+        "src/navigation/RootTabs.tsx",
+        "src/components/SyncStatusHeader.tsx",
+        "src/components/DatePickerField.tsx",
+        "src/screens/TasksScreen.tsx",
+        "src/screens/SubscriptionsScreen.tsx",
+        "src/screens/DiaryScreen.tsx",
+        "src/theme/useTheme.ts",
+        "src/utils/formatters.ts",
+        "tailwind.config.js"
+      ],
+      "fingerprints": {
+        ".superdesign/design-system.md": "c0f86c8de021404cc94de98cee8d7301432294522987c2fa554aba8eceac1db4",
+        "App.tsx": "8d03107bec0b4edb8778b2ee3b4da191e35a03d1f80ce7438bb82288435ff818",
+        "src/navigation/RootTabs.tsx": "a0345f94cf519c33255af1a8bb0802b7118a986835feed0c225ff6f90e45c8b5",
+        "src/components/SyncStatusHeader.tsx": "1a9fe1d188c13de952858104315936bcb8d87d3cc19b318b627c264574a4e052",
+        "src/components/DatePickerField.tsx": "97cafa5541ec3581ca91e0485d82c79cc2dca7c1c85cec9a535b76dd74ee466f",
+        "src/screens/TasksScreen.tsx": "eef525a18b5a7f395290809312ef8f7da929719f3dd9cb94b48094237e036b83",
+        "src/screens/SubscriptionsScreen.tsx": "62283a4df3efabe42f529b86d1fd294c273164d64e71b2711cf2fe4a9e25fbcc",
+        "src/screens/DiaryScreen.tsx": "5703fbb0fdc5607eb8496775f10fece0d04288c98ceccdb3eb3100aed0121b7a",
+        "src/theme/useTheme.ts": "3d9153d63ae1622b2e5d491c71ba39393c4dc246a703c3fbbb2228dd42664bb8",
+        "src/utils/formatters.ts": "4fb1d6e54b7381bc1c605e4b5b0d6df124b19c0dac27d63815be0696c4e4e20f",
+        "tailwind.config.js": "69c591e38f3a43e533dccbf5dd2c9b807e097dd04cc8543b4838773e61d79036"
+      },
+      "components": [
+        {
+          "name": "ScreenHeader",
+          "id": "924bbfa5-6fa3-45c0-b21e-38c3766c282a",
+          "sourcePath": "src/components/SyncStatusHeader.tsx"
+        },
+        {
+          "name": "BottomTabBar",
+          "id": "5067886c-6ad3-44a9-9e8f-6df18945c911",
+          "sourcePath": "src/navigation/RootTabs.tsx"
+        }
+      ],
+      "drafts": {
+        "6b554a49-29ed-4b9d-9652-bb8e20ca6733": {
+          "title": "Diari Harian",
+          "visualDirection": "linear-things3-neutral-compact",
+          "currentVersion": 2
+        }
+      },
+      "updatedAt": "2026-11-26T09:14:09.271Z"
+    }
+  }
+}
