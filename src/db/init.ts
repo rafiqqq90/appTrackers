@@ -18,6 +18,7 @@ export function initializeDatabase(): void {
       user_id TEXT NOT NULL,
       parent_id TEXT,
       name TEXT NOT NULL,
+      sort_order INTEGER NOT NULL DEFAULT 0,
       created_at TEXT NOT NULL,
       updated_at TEXT NOT NULL,
       deleted_at TEXT,
@@ -73,6 +74,25 @@ export function initializeDatabase(): void {
       is_synced INTEGER NOT NULL DEFAULT 0
     );
 
+    CREATE TABLE IF NOT EXISTS expenses (
+      id TEXT PRIMARY KEY NOT NULL,
+      user_id TEXT NOT NULL,
+      item_name TEXT NOT NULL,
+      amount REAL NOT NULL,
+      currency TEXT NOT NULL DEFAULT 'MYR',
+      category TEXT NOT NULL DEFAULT 'Lain-lain',
+      expense_date TEXT NOT NULL,
+      is_paid INTEGER NOT NULL DEFAULT 1,
+      due_date TEXT,
+      due_time TEXT,
+      receipt_uri TEXT,
+      receipt_name TEXT,
+      created_at TEXT NOT NULL,
+      updated_at TEXT NOT NULL,
+      deleted_at TEXT,
+      is_synced INTEGER NOT NULL DEFAULT 0
+    );
+
     CREATE TABLE IF NOT EXISTS diary_entries (
       id TEXT PRIMARY KEY NOT NULL,
       user_id TEXT NOT NULL,
@@ -101,13 +121,39 @@ export function initializeDatabase(): void {
     CREATE INDEX IF NOT EXISTS idx_completions_sync ON task_completions(is_synced, deleted_at);
     CREATE INDEX IF NOT EXISTS idx_subs_billing ON subscriptions(next_billing_date, status);
     CREATE INDEX IF NOT EXISTS idx_subs_sync ON subscriptions(is_synced, deleted_at);
+    CREATE INDEX IF NOT EXISTS idx_expenses_date ON expenses(expense_date, user_id);
+    CREATE INDEX IF NOT EXISTS idx_expenses_sync ON expenses(is_synced, deleted_at);
     CREATE INDEX IF NOT EXISTS idx_diary_date ON diary_entries(entry_date);
     CREATE INDEX IF NOT EXISTS idx_diary_sync ON diary_entries(is_synced, deleted_at);
   `);
 
-  // Safe migration for existing local SQLite databases created before folder_id existed
+  // Safe migration for existing local SQLite databases created before folder_id / sort_order existed
   try {
     sqlite.execSync(`ALTER TABLE tasks ADD COLUMN folder_id TEXT;`);
+  } catch {
+    // Column already exists
+  }
+
+  try {
+    sqlite.execSync(`ALTER TABLE task_folders ADD COLUMN sort_order INTEGER NOT NULL DEFAULT 0;`);
+  } catch {
+    // Column already exists
+  }
+
+  try {
+    sqlite.execSync(`ALTER TABLE expenses ADD COLUMN is_paid INTEGER NOT NULL DEFAULT 1;`);
+  } catch {
+    // Column already exists
+  }
+
+  try {
+    sqlite.execSync(`ALTER TABLE expenses ADD COLUMN due_date TEXT;`);
+  } catch {
+    // Column already exists
+  }
+
+  try {
+    sqlite.execSync(`ALTER TABLE expenses ADD COLUMN due_time TEXT;`);
   } catch {
     // Column already exists
   }

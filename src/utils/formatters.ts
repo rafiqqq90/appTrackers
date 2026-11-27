@@ -59,16 +59,35 @@ export function calculateSubscriptionTotals(subs: Subscription[]): {
 }
 
 /**
- * Converts stored ISO date (YYYY-MM-DD) to display format DD-MM-YYYY.
+ * Converts stored ISO date (YYYY-MM-DD) or legacy DD-MM-YYYY to system-wide DD/MM/YYYY.
  */
 export function formatDisplayDate(dateStr: string): string {
   const trimmed = dateStr.trim();
-  const isoMatch = /^(\d{4})-(\d{2})-(\d{2})$/.exec(trimmed);
+  const isoMatch = /^(\d{4})-(\d{1,2})-(\d{1,2})$/.exec(trimmed);
   if (isoMatch) {
     const [, y, m, d] = isoMatch;
-    return `${d}-${m}-${y}`;
+    return `${d.padStart(2, '0')}/${m.padStart(2, '0')}/${y}`;
+  }
+  const dmyMatch = /^(\d{1,2})[-/](\d{1,2})[-/](\d{4})$/.exec(trimmed);
+  if (dmyMatch) {
+    const [, d, m, y] = dmyMatch;
+    return `${d.padStart(2, '0')}/${m.padStart(2, '0')}/${y}`;
   }
   return trimmed;
+}
+
+/**
+ * Formats an ISO timestamp into DD/MM/YYYY HH:mm.
+ */
+export function formatDisplayDateTime(isoTimestamp: string): string {
+  const dt = new Date(isoTimestamp);
+  if (Number.isNaN(dt.getTime())) return isoTimestamp;
+  const d = String(dt.getDate()).padStart(2, '0');
+  const m = String(dt.getMonth() + 1).padStart(2, '0');
+  const y = dt.getFullYear();
+  const hh = String(dt.getHours()).padStart(2, '0');
+  const mm = String(dt.getMinutes()).padStart(2, '0');
+  return `${d}/${m}/${y} ${hh}:${mm}`;
 }
 
 /**

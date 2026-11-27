@@ -21,11 +21,11 @@
       "fingerprints": {
         ".superdesign/design-system.md": "c0f86c8de021404cc94de98cee8d7301432294522987c2fa554aba8eceac1db4",
         "App.tsx": "8d03107bec0b4edb8778b2ee3b4da191e35a03d1f80ce7438bb82288435ff818",
-        "src/navigation/RootTabs.tsx": "a0345f94cf519c33255af1a8bb0802b7118a986835feed0c225ff6f90e45c8b5",
-        "src/components/SyncStatusHeader.tsx": "1a9fe1d188c13de952858104315936bcb8d87d3cc19b318b627c264574a4e052",
-        "src/screens/TodayScreen.tsx": "15f15f02f8c6a386b3136a3a2923279af3e76ca68b6106b9899dfb469604fec8",
+        "src/navigation/RootTabs.tsx": "f82fb5f31927e599e257c26d4f7e16d6162b7ea6f7e0dc4955fe2e8b881cded7",
+        "src/components/SyncStatusHeader.tsx": "6d29b9d163d2796b5d2d2de00b2fd36484b438b1b71b71e3772bc87c55a568c8",
+        "src/screens/TodayScreen.tsx": "b3e73f4b314d3c87160fd8caf70f2d777720e82f33bf3237d22b7dea30fa1b83",
         "src/theme/useTheme.ts": "3d9153d63ae1622b2e5d491c71ba39393c4dc246a703c3fbbb2228dd42664bb8",
-        "src/utils/formatters.ts": "4fb1d6e54b7381bc1c605e4b5b0d6df124b19c0dac27d63815be0696c4e4e20f",
+        "src/utils/formatters.ts": "a0d77a9c076318d184101ca06fa426afcff7db1f09bda6658f738dbec55c1a8a",
         "global.css": "cc1a7ad0d019ddb1d32d0ecb588ba0ac26ce41d8625dd6c366348b25f83a28ec",
         "tailwind.config.js": "69c591e38f3a43e533dccbf5dd2c9b807e097dd04cc8543b4838773e61d79036"
       },
@@ -79,14 +79,14 @@
       "fingerprints": {
         ".superdesign/design-system.md": "c0f86c8de021404cc94de98cee8d7301432294522987c2fa554aba8eceac1db4",
         "App.tsx": "8d03107bec0b4edb8778b2ee3b4da191e35a03d1f80ce7438bb82288435ff818",
-        "src/navigation/RootTabs.tsx": "a0345f94cf519c33255af1a8bb0802b7118a986835feed0c225ff6f90e45c8b5",
-        "src/components/SyncStatusHeader.tsx": "1a9fe1d188c13de952858104315936bcb8d87d3cc19b318b627c264574a4e052",
-        "src/components/DatePickerField.tsx": "97cafa5541ec3581ca91e0485d82c79cc2dca7c1c85cec9a535b76dd74ee466f",
-        "src/screens/TasksScreen.tsx": "eef525a18b5a7f395290809312ef8f7da929719f3dd9cb94b48094237e036b83",
-        "src/screens/SubscriptionsScreen.tsx": "62283a4df3efabe42f529b86d1fd294c273164d64e71b2711cf2fe4a9e25fbcc",
+        "src/navigation/RootTabs.tsx": "f82fb5f31927e599e257c26d4f7e16d6162b7ea6f7e0dc4955fe2e8b881cded7",
+        "src/components/SyncStatusHeader.tsx": "6d29b9d163d2796b5d2d2de00b2fd36484b438b1b71b71e3772bc87c55a568c8",
+        "src/components/DatePickerField.tsx": "36fcc72bbd60d7e036ddd723241d77be2d69a001de27724d183588f4c00f66e4",
+        "src/screens/TasksScreen.tsx": "83290587a5a50ba0008ffc5b21958afc07ec8d3c352bc2d1416857e48a82f618",
+        "src/screens/SubscriptionsScreen.tsx": "53c4df160ec115947f7d6775479d4ee15bf96c2c02269335555d2443cbace588",
         "src/screens/DiaryScreen.tsx": "5703fbb0fdc5607eb8496775f10fece0d04288c98ceccdb3eb3100aed0121b7a",
         "src/theme/useTheme.ts": "3d9153d63ae1622b2e5d491c71ba39393c4dc246a703c3fbbb2228dd42664bb8",
-        "src/utils/formatters.ts": "4fb1d6e54b7381bc1c605e4b5b0d6df124b19c0dac27d63815be0696c4e4e20f",
+        "src/utils/formatters.ts": "a0d77a9c076318d184101ca06fa426afcff7db1f09bda6658f738dbec55c1a8a",
         "tailwind.config.js": "69c591e38f3a43e533dccbf5dd2c9b807e097dd04cc8543b4838773e61d79036"
       },
       "components": [
@@ -105,10 +105,10 @@
         "1fb60cff-619d-4814-b9f0-e680b0dc5b13": {
           "title": "Tugasan — SpaceX Cockpit",
           "visualDirection": "linear-things3-neutral-compact",
-          "currentVersion": 2
+          "currentVersion": 4
         }
       },
-      "updatedAt": "2026-11-26T09:14:02.652Z"
+      "updatedAt": "2026-11-27T07:27:53.613Z"
     },
     "langganan": {
       "targetKind": "new-ui",
@@ -133,14 +133,14 @@
       "fingerprints": {
         ".superdesign/design-system.md": "c0f86c8de021404cc94de98cee8d7301432294522987c2fa554aba8eceac1db4",
         "App.tsx": "8d03107bec0b4edb8778b2ee3b4da191e35a03d1f80ce7438bb82288435ff818",
-        "src/navigation/RootTabs.tsx": "a0345f94cf519c33255af1a8bb0802b7118a986835feed0c225ff6f90e45c8b5",
-        "src/components/SyncStatusHeader.tsx": "1a9fe1d188c13de952858104315936bcb8d87d3cc19b318b627c264574a4e052",
-        "src/components/DatePickerField.tsx": "97cafa5541ec3581ca91e0485d82c79cc2dca7c1c85cec9a535b76dd74ee466f",
-        "src/screens/TasksScreen.tsx": "eef525a18b5a7f395290809312ef8f7da929719f3dd9cb94b48094237e036b83",
-        "src/screens/SubscriptionsScreen.tsx": "62283a4df3efabe42f529b86d1fd294c273164d64e71b2711cf2fe4a9e25fbcc",
+        "src/navigation/RootTabs.tsx": "f82fb5f31927e599e257c26d4f7e16d6162b7ea6f7e0dc4955fe2e8b881cded7",
+        "src/components/SyncStatusHeader.tsx": "6d29b9d163d2796b5d2d2de00b2fd36484b438b1b71b71e3772bc87c55a568c8",
+        "src/components/DatePickerField.tsx": "36fcc72bbd60d7e036ddd723241d77be2d69a001de27724d183588f4c00f66e4",
+        "src/screens/TasksScreen.tsx": "83290587a5a50ba0008ffc5b21958afc07ec8d3c352bc2d1416857e48a82f618",
+        "src/screens/SubscriptionsScreen.tsx": "53c4df160ec115947f7d6775479d4ee15bf96c2c02269335555d2443cbace588",
         "src/screens/DiaryScreen.tsx": "5703fbb0fdc5607eb8496775f10fece0d04288c98ceccdb3eb3100aed0121b7a",
         "src/theme/useTheme.ts": "3d9153d63ae1622b2e5d491c71ba39393c4dc246a703c3fbbb2228dd42664bb8",
-        "src/utils/formatters.ts": "4fb1d6e54b7381bc1c605e4b5b0d6df124b19c0dac27d63815be0696c4e4e20f",
+        "src/utils/formatters.ts": "a0d77a9c076318d184101ca06fa426afcff7db1f09bda6658f738dbec55c1a8a",
         "tailwind.config.js": "69c591e38f3a43e533dccbf5dd2c9b807e097dd04cc8543b4838773e61d79036"
       },
       "components": [
@@ -187,14 +187,14 @@
       "fingerprints": {
         ".superdesign/design-system.md": "c0f86c8de021404cc94de98cee8d7301432294522987c2fa554aba8eceac1db4",
         "App.tsx": "8d03107bec0b4edb8778b2ee3b4da191e35a03d1f80ce7438bb82288435ff818",
-        "src/navigation/RootTabs.tsx": "a0345f94cf519c33255af1a8bb0802b7118a986835feed0c225ff6f90e45c8b5",
-        "src/components/SyncStatusHeader.tsx": "1a9fe1d188c13de952858104315936bcb8d87d3cc19b318b627c264574a4e052",
-        "src/components/DatePickerField.tsx": "97cafa5541ec3581ca91e0485d82c79cc2dca7c1c85cec9a535b76dd74ee466f",
-        "src/screens/TasksScreen.tsx": "eef525a18b5a7f395290809312ef8f7da929719f3dd9cb94b48094237e036b83",
-        "src/screens/SubscriptionsScreen.tsx": "62283a4df3efabe42f529b86d1fd294c273164d64e71b2711cf2fe4a9e25fbcc",
+        "src/navigation/RootTabs.tsx": "f82fb5f31927e599e257c26d4f7e16d6162b7ea6f7e0dc4955fe2e8b881cded7",
+        "src/components/SyncStatusHeader.tsx": "6d29b9d163d2796b5d2d2de00b2fd36484b438b1b71b71e3772bc87c55a568c8",
+        "src/components/DatePickerField.tsx": "36fcc72bbd60d7e036ddd723241d77be2d69a001de27724d183588f4c00f66e4",
+        "src/screens/TasksScreen.tsx": "83290587a5a50ba0008ffc5b21958afc07ec8d3c352bc2d1416857e48a82f618",
+        "src/screens/SubscriptionsScreen.tsx": "53c4df160ec115947f7d6775479d4ee15bf96c2c02269335555d2443cbace588",
         "src/screens/DiaryScreen.tsx": "5703fbb0fdc5607eb8496775f10fece0d04288c98ceccdb3eb3100aed0121b7a",
         "src/theme/useTheme.ts": "3d9153d63ae1622b2e5d491c71ba39393c4dc246a703c3fbbb2228dd42664bb8",
-        "src/utils/formatters.ts": "4fb1d6e54b7381bc1c605e4b5b0d6df124b19c0dac27d63815be0696c4e4e20f",
+        "src/utils/formatters.ts": "a0d77a9c076318d184101ca06fa426afcff7db1f09bda6658f738dbec55c1a8a",
         "tailwind.config.js": "69c591e38f3a43e533dccbf5dd2c9b807e097dd04cc8543b4838773e61d79036"
       },
       "components": [

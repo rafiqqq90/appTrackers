@@ -81,9 +81,11 @@ export function TodayScreen() {
   const tasks = useAppStore((s) => s.tasks);
   const todayCompletions = useAppStore((s) => s.todayCompletions);
   const subscriptions = useAppStore((s) => s.subscriptions);
+  const expenses = useAppStore((s) => s.expenses);
   const syncState = useAppStore((s) => s.syncState);
   const triggerSync = useAppStore((s) => s.triggerSync);
   const toggleTaskDoneToday = useAppStore((s) => s.toggleTaskDoneToday);
+  const toggleExpensePaid = useAppStore((s) => s.toggleExpensePaid);
 
   const todayTasks = useMemo(
     () =>
@@ -130,6 +132,19 @@ export function TodayScreen() {
         })
         .sort((a, b) => daysUntilDate(a.nextBillingDate) - daysUntilDate(b.nextBillingDate)),
     [subscriptions]
+  );
+
+  // Expense payment alerts: trigger starting 3 days before dueDate (days <= 3, including overdue until paid)
+  const dueExpenseAlerts = useMemo(
+    () =>
+      expenses
+        .filter((exp) => {
+          if (exp.isPaid || !exp.dueDate) return false;
+          const days = daysUntilDate(exp.dueDate);
+          return days <= 3;
+        })
+        .sort((a, b) => daysUntilDate(a.dueDate!) - daysUntilDate(b.dueDate!)),
+    [expenses]
   );
 
   return (
@@ -337,12 +352,12 @@ export function TodayScreen() {
           )}
         </View>
 
-        {/* 3. Amaran Langganan (7 Hari) — Neutral Surface + 6px Status Dots */}
+        {/* 3. Amaran Komitmen (7 Hari) — Neutral Surface + 6px Status Dots */}
         <View>
           <View className="flex-row items-center justify-between px-0.5 mb-2">
             <View className="flex-row items-center gap-2">
               <Text className="text-xs font-medium text-zinc-500 dark:text-zinc-400">
-                Amaran Langganan (7 Hari)
+                Amaran Komitmen (7 Hari)
               </Text>
               {upcomingSubs.length > 0 ? (
                 <View className="px-1.5 py-0.5 rounded bg-zinc-200/70 dark:bg-[#1C1C1F]">
@@ -357,7 +372,7 @@ export function TodayScreen() {
             </View>
 
             <Pressable
-              onPress={() => navigation.navigate('Langganan')}
+              onPress={() => navigation.navigate('Perbelanjaan', { tab: 'komitmen' })}
               className="flex-row items-center gap-0.5"
             >
               <Text className="text-xs font-medium text-zinc-500 dark:text-zinc-400">
@@ -383,7 +398,7 @@ export function TodayScreen() {
                 return (
                   <Pressable
                     key={sub.id}
-                    onPress={() => navigation.navigate('Langganan')}
+                    onPress={() => navigation.navigate('Perbelanjaan')}
                     className={`py-3 px-4 flex-row items-center justify-between gap-3 ${
                       idx > 0
                         ? 'border-t border-black/5 dark:border-white/5'
@@ -422,7 +437,7 @@ export function TodayScreen() {
                             style={{ fontVariant: ['tabular-nums'] }}
                             className="text-[11.5px] font-mono text-zinc-500 dark:text-zinc-500"
                           >
-                            {days} hari · {formatDisplayDate(sub.nextBillingDate).slice(0, 5)}
+                            {days} hari · {formatDisplayDate(sub.nextBillingDate)}
                           </Text>
                         )}
                       </View>
@@ -435,6 +450,131 @@ export function TodayScreen() {
                       {formatCurrency(sub.amount, sub.currency)}
                     </Text>
                   </Pressable>
+                );
+              })}
+            </View>
+          )}
+        </View>
+
+        {/* 3b. Amaran Bayaran Perbelanjaan (3 Hari Sebelum) */}
+        <View>
+          <View className="flex-row items-center justify-between px-0.5 mb-2">
+            <View className="flex-row items-center gap-2">
+              <Text className="text-xs font-medium text-zinc-500 dark:text-zinc-400">
+                Alert Bayaran Perbelanjaan (3 Hari)
+              </Text>
+              {dueExpenseAlerts.length > 0 ? (
+                <View className="px-1.5 py-0.5 rounded bg-amber-500/15 dark:bg-amber-500/15">
+                  <Text
+                    style={{ fontVariant: ['tabular-nums'] }}
+                    className="text-[10px] font-mono font-semibold text-amber-700 dark:text-amber-400"
+                  >
+                    {dueExpenseAlerts.length}
+                  </Text>
+                </View>
+              ) : null}
+            </View>
+
+            <Pressable
+              onPress={() => navigation.navigate('Perbelanjaan', { tab: 'perbelanjaan' })}
+              className="flex-row items-center gap-0.5"
+            >
+              <Text className="text-xs font-medium text-zinc-500 dark:text-zinc-400">
+                Lihat Semua
+              </Text>
+              <ChevronRight size={13} color={colors.icon} />
+            </Pressable>
+          </View>
+
+          {dueExpenseAlerts.length === 0 ? (
+            <View className="bg-white dark:bg-[#141416] rounded-xl px-4 py-3.5 border border-zinc-200/90 dark:border-[#242428]">
+              <Text className="text-xs text-zinc-500 dark:text-zinc-500">
+                Tiada bayaran perbelanjaan tertunggak atau perlu dibayar dalam 3 hari terdekat.
+              </Text>
+            </View>
+          ) : (
+            <View className="bg-white dark:bg-[#141416] rounded-xl border border-zinc-200/90 dark:border-[#242428] overflow-hidden">
+              {dueExpenseAlerts.map((exp, idx) => {
+                const days = daysUntilDate(exp.dueDate!);
+                const isUrgent = days <= 0;
+
+                return (
+                  <View
+                    key={exp.id}
+                    className={`flex-row items-center ${
+                      idx > 0
+                        ? 'border-t border-black/5 dark:border-white/5'
+                        : ''
+                    }`}
+                  >
+                    {/* Quick Mark-as-Paid Checkbox */}
+                    <Pressable
+                      onPress={() => toggleExpensePaid(exp.id)}
+                      hitSlop={8}
+                      className="pl-4 pr-2.5 py-3 justify-center"
+                    >
+                      <View
+                        className={`w-[17px] h-[17px] rounded-[5px] border items-center justify-center ${
+                          isUrgent ? 'border-red-500' : 'border-amber-500'
+                        }`}
+                      />
+                    </Pressable>
+
+                    <Pressable
+                      onPress={() =>
+                        navigation.navigate('Perbelanjaan', { tab: 'perbelanjaan' })
+                      }
+                      className="flex-1 py-3 pr-4 pl-0.5 flex-row items-center justify-between gap-3"
+                    >
+                      <View className="flex-1 min-w-0 pr-2">
+                        <View className="flex-row items-center gap-2 flex-wrap">
+                          <Text
+                            numberOfLines={1}
+                            className="text-[13.5px] font-medium text-zinc-900 dark:text-[#F4F4F5]"
+                          >
+                            {exp.itemName}
+                          </Text>
+
+                          <View
+                            className={`px-1.5 py-0.5 rounded border ${
+                              isUrgent
+                                ? 'bg-red-500/10 border-red-500/20'
+                                : 'bg-amber-500/10 border-amber-500/20'
+                            }`}
+                          >
+                            <Text
+                              className={`text-[10.5px] font-medium ${
+                                isUrgent
+                                  ? 'text-red-600 dark:text-red-400'
+                                  : 'text-amber-700 dark:text-amber-400'
+                              }`}
+                            >
+                              {days < 0
+                                ? `Lewat ${Math.abs(days)} hari`
+                                : days === 0
+                                ? 'Hari ini'
+                                : `${days} hari lagi`}
+                            </Text>
+                          </View>
+                        </View>
+
+                        <Text
+                          style={{ fontVariant: ['tabular-nums'] }}
+                          className="text-[11.5px] font-mono text-zinc-500 dark:text-zinc-500 mt-0.5"
+                        >
+                          {formatDisplayDate(exp.dueDate!)}
+                          {exp.category ? ` · ${exp.category}` : ''}
+                        </Text>
+                      </View>
+
+                      <Text
+                        style={{ fontVariant: ['tabular-nums'] }}
+                        className="text-[13px] font-mono font-medium text-zinc-900 dark:text-[#F4F4F5] shrink-0"
+                      >
+                        {formatCurrency(exp.amount, exp.currency)}
+                      </Text>
+                    </Pressable>
+                  </View>
                 );
               })}
             </View>

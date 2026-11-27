@@ -15,6 +15,7 @@ export interface TaskFolder {
   userId: string;
   parentId: string | null;
   name: string;
+  sortOrder: number;
   createdAt: string;
   updatedAt: string;
   deletedAt: string | null;
@@ -68,6 +69,29 @@ export interface Subscription {
   alertDaysBefore: number[];
   paymentMethod: string | null;
   status: SubscriptionStatus;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt: string | null;
+  isSynced: boolean;
+}
+
+export interface Expense {
+  id: string;
+  userId: string;
+  itemName: string;
+  amount: number;
+  currency: string;
+  category: string;
+  /** YYYY-MM-DD */
+  expenseDate: string;
+  /** True when already paid; false when scheduled to be paid later */
+  isPaid: boolean;
+  /** Scheduled payment date YYYY-MM-DD (alerts on Hari Ini 3 days prior) */
+  dueDate: string | null;
+  /** Optional scheduled payment time HH:mm */
+  dueTime: string | null;
+  receiptUri: string | null;
+  receiptName: string | null;
   createdAt: string;
   updatedAt: string;
   deletedAt: string | null;

@@ -7,6 +7,11 @@ import {
   type UpdateDiaryInput,
 } from '../repositories/diaryRepository';
 import {
+  expenseRepository,
+  type CreateExpenseInput,
+  type UpdateExpenseInput,
+} from '../repositories/expenseRepository';
+import {
   subscriptionRepository,
   type CreateSubscriptionInput,
   type UpdateSubscriptionInput,
@@ -24,6 +29,7 @@ import {
 import { syncService } from '../services/syncService';
 import type {
   DiaryEntry,
+  Expense,
   Subscription,
   SyncState,
   Task,
@@ -46,6 +52,7 @@ interface AppStoreState {
   tasks: Task[];
   todayCompletions: TaskCompletion[];
   subscriptions: Subscription[];
+  expenses: Expense[];
   diaryEntries: DiaryEntry[];
 
   bootstrap: () => void;
@@ -55,6 +62,7 @@ interface AppStoreState {
 
   addTaskFolder: (input: Omit<CreateTaskFolderInput, 'userId'>) => void;
   updateTaskFolder: (id: string, input: UpdateTaskFolderInput) => void;
+  reorderTaskFolders: (orderedIds: string[]) => void;
   deleteTaskFolder: (id: string) => void;
 
   addTask: (input: Omit<CreateTaskInput, 'userId'>) => void;
@@ -65,6 +73,11 @@ interface AppStoreState {
   addSubscription: (input: Omit<CreateSubscriptionInput, 'userId'>) => void;
   updateSubscription: (id: string, input: UpdateSubscriptionInput) => void;
   deleteSubscription: (id: string) => void;
+
+  addExpense: (input: Omit<CreateExpenseInput, 'userId'>) => void;
+  updateExpense: (id: string, input: UpdateExpenseInput) => void;
+  toggleExpensePaid: (id: string) => void;
+  deleteExpense: (id: string) => void;
 
   addDiaryEntry: (input: Omit<CreateDiaryInput, 'userId'>) => void;
   updateDiaryEntry: (id: string, input: UpdateDiaryInput) => void;
@@ -82,6 +95,7 @@ export const useAppStore = create<AppStoreState>((set, get) => ({
   tasks: [],
   todayCompletions: [],
   subscriptions: [],
+  expenses: [],
   diaryEntries: [],
 
   bootstrap: () => {
@@ -98,6 +112,7 @@ export const useAppStore = create<AppStoreState>((set, get) => ({
       tasks: taskRepository.getAllActive(userId),
       todayCompletions: taskRepository.getCompletionsForDate(userId, today),
       subscriptions: subscriptionRepository.getAll(userId),
+      expenses: expenseRepository.getAll(userId),
       diaryEntries: diaryRepository.getAll(userId),
     });
   },
@@ -145,6 +160,12 @@ export const useAppStore = create<AppStoreState>((set, get) => ({
 
   updateTaskFolder: (id, input) => {
     taskFolderRepository.update(id, input);
+    get().refreshAll();
+    if (get().isOnline) void get().triggerSync();
+  },
+
+  reorderTaskFolders: (orderedIds) => {
+    taskFolderRepository.reorder(orderedIds);
     get().refreshAll();
     if (get().isOnline) void get().triggerSync();
   },
@@ -197,6 +218,31 @@ export const useAppStore = create<AppStoreState>((set, get) => ({
 
   deleteSubscription: (id) => {
     subscriptionRepository.softDelete(id);
+    get().refreshAll();
+    if (get().isOnline) void get().triggerSync();
+  },
+
+  addExpense: (input) => {
+    const { userId, isOnline } = get();
+    expenseRepository.create({ ...input, userId });
+    get().refreshAll();
+    if (isOnline) void get().triggerSync();
+  },
+
+  updateExpense: (id, input) => {
+    expenseRepository.update(id, input);
+    get().refreshAll();
+    if (get().isOnline) void get().triggerSync();
+  },
+
+  toggleExpensePaid: (id) => {
+    expenseRepository.togglePaid(id);
+    get().refreshAll();
+    if (get().isOnline) void get().triggerSync();
+  },
+
+  deleteExpense: (id) => {
+    expenseRepository.softDelete(id);
     get().refreshAll();
     if (get().isOnline) void get().triggerSync();
   },

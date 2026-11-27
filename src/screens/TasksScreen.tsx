@@ -18,6 +18,7 @@ import {
   Trash2,
   X,
 } from 'lucide-react-native';
+import { DraggableFolderList } from '../components/DraggableFolderList';
 import { SyncStatusHeader } from '../components/SyncStatusHeader';
 import { useAppStore } from '../store/useAppStore';
 import type { RecurrenceType, Task, TaskFolder } from '../types/models';
@@ -48,6 +49,7 @@ export function TasksScreen() {
   const todayCompletions = useAppStore((s) => s.todayCompletions);
   const addTaskFolder = useAppStore((s) => s.addTaskFolder);
   const updateTaskFolder = useAppStore((s) => s.updateTaskFolder);
+  const reorderTaskFolders = useAppStore((s) => s.reorderTaskFolders);
   const deleteTaskFolder = useAppStore((s) => s.deleteTaskFolder);
   const addTask = useAppStore((s) => s.addTask);
   const updateTask = useAppStore((s) => s.updateTask);
@@ -60,6 +62,7 @@ export function TasksScreen() {
   );
 
   const [currentFolderId, setCurrentFolderId] = useState<string | null>(null);
+  const [isDraggingFolder, setIsDraggingFolder] = useState(false);
 
   // Folder Modal State
   const [folderModalVisible, setFolderModalVisible] = useState(false);
@@ -285,6 +288,7 @@ export function TasksScreen() {
 
       <ScrollView
         className="flex-1"
+        scrollEnabled={!isDraggingFolder}
         contentContainerClassName="px-4 pt-3.5 pb-28 gap-4 max-w-2xl w-full self-center"
       >
         {/* ROOT LEVEL: Folders only */}
@@ -311,59 +315,13 @@ export function TasksScreen() {
               </Pressable>
             </View>
           ) : (
-            <View>
-              <View className="flex-row items-center justify-between px-0.5 mb-2">
-                <Text className="text-xs font-medium text-zinc-500 dark:text-zinc-400">
-                  Senarai Folder
-                </Text>
-                <Text
-                  style={{ fontVariant: ['tabular-nums'] }}
-                  className="text-[11px] font-mono text-zinc-400 dark:text-zinc-500"
-                >
-                  {childFolders.length}
-                </Text>
-              </View>
-
-              <View className="bg-white dark:bg-[#141416] rounded-xl border border-zinc-200/90 dark:border-[#242428] overflow-hidden">
-                {childFolders.map((folder, idx) => {
-                  const counts = getFolderCounts(folder.id);
-                  return (
-                    <Pressable
-                      key={folder.id}
-                      onPress={() => setCurrentFolderId(folder.id)}
-                      className={`py-3 px-4 flex-row items-center justify-between gap-3 ${
-                        idx > 0
-                          ? 'border-t border-black/5 dark:border-white/5'
-                          : ''
-                      }`}
-                    >
-                      <View className="flex-row items-center gap-3 flex-1 min-w-0">
-                        <Folder size={16} color={colors.iconStrong} strokeWidth={1.8} />
-                        <Text
-                          numberOfLines={1}
-                          className="text-[13.5px] font-medium text-zinc-900 dark:text-[#F4F4F5] flex-1"
-                        >
-                          {folder.name}
-                        </Text>
-                      </View>
-
-                      <View className="flex-row items-center gap-2 shrink-0">
-                        <Text
-                          style={{ fontVariant: ['tabular-nums'] }}
-                          className="text-[11.5px] font-mono text-zinc-400 dark:text-zinc-500"
-                        >
-                          {counts.subfolderCount > 0
-                            ? `${counts.subfolderCount} sub · `
-                            : ''}
-                          {counts.taskCount} tugasan
-                        </Text>
-                        <ChevronRight size={14} color={colors.iconMuted} />
-                      </View>
-                    </Pressable>
-                  );
-                })}
-              </View>
-            </View>
+            <DraggableFolderList
+              folders={childFolders}
+              getCounts={getFolderCounts}
+              onOpenFolder={setCurrentFolderId}
+              onReorder={reorderTaskFolders}
+              onDragActiveChange={setIsDraggingFolder}
+            />
           )
         ) : (
           /* INSIDE A FOLDER: Subfolders + Tasks */

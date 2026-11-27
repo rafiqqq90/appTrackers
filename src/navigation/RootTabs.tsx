@@ -16,7 +16,7 @@ import { useThemeColors } from '../theme/useTheme';
 export type RootTabParamList = {
   'Hari Ini': undefined;
   Tugasan: undefined;
-  Langganan: undefined;
+  Perbelanjaan: { tab?: 'komitmen' | 'perbelanjaan' } | undefined;
   Diari: undefined;
 };
 
@@ -80,7 +80,7 @@ export function RootTabs() {
         }}
       />
       <Tab.Screen
-        name="Langganan"
+        name="Perbelanjaan"
         component={SubscriptionsScreen}
         options={{
           tabBarIcon: ({ focused }) => (

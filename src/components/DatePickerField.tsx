@@ -23,21 +23,26 @@ const MONTH_NAMES = [
 const WEEKDAY_HEADERS = ['Isn', 'Sel', 'Rab', 'Kha', 'Jum', 'Sab', 'Aha'];
 
 interface DatePickerFieldProps {
-  /** ISO date string YYYY-MM-DD */
-  value: string;
+  /** ISO date string YYYY-MM-DD, or empty/null when unselected in filter mode */
+  value: string | null;
   /** Callback receives ISO date string YYYY-MM-DD */
   onChange: (isoDate: string) => void;
   label?: string;
+  placeholder?: string;
+  compact?: boolean;
+  onClear?: () => void;
 }
 
-function parseIsoParts(iso: string): { year: number; month: number; day: number } {
-  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso.trim());
-  if (match) {
-    return {
-      year: Number(match[1]),
-      month: Number(match[2]) - 1,
-      day: Number(match[3]),
-    };
+function parseIsoParts(iso: string | null): { year: number; month: number; day: number } {
+  if (iso) {
+    const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso.trim());
+    if (match) {
+      return {
+        year: Number(match[1]),
+        month: Number(match[2]) - 1,
+        day: Number(match[3]),
+      };
+    }
   }
   const now = new Date();
   return {
@@ -55,6 +60,9 @@ export function DatePickerField({
   value,
   onChange,
   label,
+  placeholder = 'dd/mm/yyyy',
+  compact = false,
+  onClear,
 }: DatePickerFieldProps) {
   const { colors } = useThemeColors();
   const [open, setOpen] = useState(false);
@@ -125,6 +133,8 @@ export function DatePickerField({
     setOpen(false);
   };
 
+  const hasValue = Boolean(value && value.trim().length > 0);
+
   return (
     <View>
       {label ? (
@@ -133,18 +143,40 @@ export function DatePickerField({
         </Text>
       ) : null}
 
-      <Pressable
-        onPress={handleOpen}
-        className="border border-zinc-200 dark:border-[#242428] rounded-lg px-3 py-2.5 bg-zinc-50 dark:bg-[#101012] flex-row items-center justify-between"
+      <View
+        className={`border border-zinc-200 dark:border-[#242428] rounded-lg flex-row items-center justify-between ${
+          compact
+            ? 'px-2.5 h-8 bg-white dark:bg-[#141416]'
+            : 'px-3 py-2.5 bg-zinc-50 dark:bg-[#101012]'
+        }`}
       >
-        <Text
-          style={{ fontVariant: ['tabular-nums'] }}
-          className="text-[13px] font-mono text-zinc-900 dark:text-[#F4F4F5]"
+        <Pressable
+          onPress={handleOpen}
+          className="flex-row items-center gap-2 flex-1"
         >
-          {formatDisplayDate(value)}
-        </Text>
-        <Calendar size={15} color={colors.icon} strokeWidth={1.8} />
-      </Pressable>
+          <Calendar size={compact ? 13 : 15} color={colors.icon} strokeWidth={1.8} />
+          <Text
+            style={{ fontVariant: ['tabular-nums'] }}
+            className={`${compact ? 'text-xs' : 'text-[13px]'} font-mono ${
+              hasValue
+                ? 'text-zinc-900 dark:text-[#F4F4F5]'
+                : 'text-zinc-400 dark:text-zinc-500'
+            }`}
+          >
+            {hasValue && value ? formatDisplayDate(value) : placeholder}
+          </Text>
+        </Pressable>
+
+        {hasValue && onClear ? (
+          <Pressable
+            onPress={onClear}
+            hitSlop={8}
+            className="ml-1.5 pl-1.5 border-l border-zinc-200 dark:border-[#242428]"
+          >
+            <X size={13} color={colors.icon} />
+          </Pressable>
+        ) : null}
+      </View>
 
       <Modal
         visible={open}
@@ -152,13 +184,24 @@ export function DatePickerField({
         animationType="fade"
         onRequestClose={() => setOpen(false)}
       >
-        <View className="flex-1 justify-center items-center bg-black/50 px-5">
-          <View className="w-full max-w-sm bg-white dark:bg-[#141416] border border-zinc-200 dark:border-[#242428] rounded-xl p-4 shadow-xl">
+        <Pressable
+          onPress={() => setOpen(false)}
+          className="flex-1 justify-center items-center bg-black/55 px-5"
+        >
+          <Pressable
+            onPress={(e) => e.stopPropagation()}
+            className="w-full max-w-sm bg-white dark:bg-[#141416] border border-zinc-200 dark:border-[#242428] rounded-xl p-4 shadow-xl"
+          >
             {/* Modal Header */}
             <View className="flex-row items-center justify-between mb-3">
-              <Text className="text-[15px] font-semibold text-zinc-900 dark:text-[#F4F4F5]">
-                Pilih Tarikh
-              </Text>
+              <View>
+                <Text className="text-[15px] font-semibold text-zinc-900 dark:text-[#F4F4F5]">
+                  Pilih Tarikh
+                </Text>
+                <Text className="text-[11px] font-mono text-zinc-400 dark:text-zinc-500 mt-0.5">
+                  Format: dd/mm/yyyy
+                </Text>
+              </View>
               <Pressable onPress={() => setOpen(false)} className="p-1">
                 <X size={18} color={colors.icon} />
               </Pressable>
@@ -206,7 +249,7 @@ export function DatePickerField({
                     }
 
                     const cellIso = toIsoDate(viewYear, viewMonth, day);
-                    const isSelected = cellIso === value;
+                    const isSelected = Boolean(value && cellIso === value);
                     const isToday = cellIso === todayIso;
 
                     return (
@@ -252,23 +295,39 @@ export function DatePickerField({
               >
                 <Text
                   style={{ fontVariant: ['tabular-nums'] }}
-                  className="text-xs font-medium text-zinc-800 dark:text-zinc-200"
+                  className="text-xs font-mono font-medium text-zinc-800 dark:text-zinc-200"
                 >
                   Hari Ini ({formatDisplayDate(todayIso)})
                 </Text>
               </Pressable>
 
-              <Pressable
-                onPress={() => setOpen(false)}
-                className="px-2.5 py-1.5 rounded-lg"
-              >
-                <Text className="text-xs font-medium text-zinc-500 dark:text-zinc-400">
-                  Tutup
-                </Text>
-              </Pressable>
+              <View className="flex-row items-center gap-2">
+                {hasValue && onClear ? (
+                  <Pressable
+                    onPress={() => {
+                      onClear();
+                      setOpen(false);
+                    }}
+                    className="px-2.5 py-1.5 rounded-lg bg-red-500/10"
+                  >
+                    <Text className="text-xs font-medium text-red-600 dark:text-red-400">
+                      Semua Tarikh
+                    </Text>
+                  </Pressable>
+                ) : null}
+
+                <Pressable
+                  onPress={() => setOpen(false)}
+                  className="px-2.5 py-1.5 rounded-lg"
+                >
+                  <Text className="text-xs font-medium text-zinc-500 dark:text-zinc-400">
+                    Tutup
+                  </Text>
+                </Pressable>
+              </View>
             </View>
-          </View>
-        </View>
+          </Pressable>
+        </Pressable>
       </Modal>
     </View>
   );

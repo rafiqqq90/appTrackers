@@ -10,6 +10,7 @@ function mapFolderRow(row: typeof taskFolders.$inferSelect): TaskFolder {
     userId: row.user_id,
     parentId: row.parent_id,
     name: row.name,
+    sortOrder: row.sort_order ?? 0,
     createdAt: row.created_at,
     updatedAt: row.updated_at,
     deletedAt: row.deleted_at,
@@ -35,7 +36,11 @@ export const taskFolderRepository = {
       .where(
         and(eq(taskFolders.user_id, userId), isNull(taskFolders.deleted_at))
       )
-      .orderBy(asc(taskFolders.name), asc(taskFolders.created_at))
+      .orderBy(
+        asc(taskFolders.sort_order),
+        asc(taskFolders.created_at),
+        asc(taskFolders.name)
+      )
       .all();
 
     return rows.map(mapFolderRow);
@@ -46,12 +51,21 @@ export const taskFolderRepository = {
     const id = generateId();
     const parentId = input.parentId ?? null;
 
+    const siblings = this.getAll(input.userId).filter(
+      (f) => (f.parentId ?? null) === parentId
+    );
+    const nextSortOrder =
+      siblings.length > 0
+        ? Math.max(...siblings.map((s, idx) => s.sortOrder ?? idx)) + 1
+        : 0;
+
     db.insert(taskFolders)
       .values({
         id,
         user_id: input.userId,
         parent_id: parentId,
         name: input.name.trim(),
+        sort_order: nextSortOrder,
         created_at: now,
         updated_at: now,
         deleted_at: null,
@@ -64,6 +78,7 @@ export const taskFolderRepository = {
       userId: input.userId,
       parentId,
       name: input.name.trim(),
+      sortOrder: nextSortOrder,
       createdAt: now,
       updatedAt: now,
       deletedAt: null,
@@ -81,6 +96,20 @@ export const taskFolderRepository = {
       })
       .where(eq(taskFolders.id, id))
       .run();
+  },
+
+  reorder(orderedIds: string[]): void {
+    const now = nowIsoUtc();
+    orderedIds.forEach((id, index) => {
+      db.update(taskFolders)
+        .set({
+          sort_order: index,
+          updated_at: now,
+          is_synced: 0,
+        })
+        .where(eq(taskFolders.id, id))
+        .run();
+    });
   },
 
   /**

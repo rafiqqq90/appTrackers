@@ -8,6 +8,7 @@ export const taskFolders = sqliteTable('task_folders', {
   user_id: text('user_id').notNull(),
   parent_id: text('parent_id'),
   name: text('name').notNull(),
+  sort_order: integer('sort_order').notNull().default(0),
   created_at: text('created_at').notNull(),
   updated_at: text('updated_at').notNull(),
   deleted_at: text('deleted_at'),
@@ -67,6 +68,28 @@ export const subscriptions = sqliteTable('subscriptions', {
   alert_days_before: text('alert_days_before').notNull().default('[7,3,1]'),
   payment_method: text('payment_method'),
   status: text('status').notNull().default('active'),
+  created_at: text('created_at').notNull(),
+  updated_at: text('updated_at').notNull(),
+  deleted_at: text('deleted_at'),
+  is_synced: integer('is_synced').notNull().default(0),
+});
+
+/**
+ * 3b. Jadual expenses (Senarai Perbelanjaan)
+ */
+export const expenses = sqliteTable('expenses', {
+  id: text('id').primaryKey(),
+  user_id: text('user_id').notNull(),
+  item_name: text('item_name').notNull(),
+  amount: real('amount').notNull(),
+  currency: text('currency').notNull().default('MYR'),
+  category: text('category').notNull().default('Lain-lain'),
+  expense_date: text('expense_date').notNull(),
+  is_paid: integer('is_paid').notNull().default(1),
+  due_date: text('due_date'),
+  due_time: text('due_time'),
+  receipt_uri: text('receipt_uri'),
+  receipt_name: text('receipt_name'),
   created_at: text('created_at').notNull(),
   updated_at: text('updated_at').notNull(),
   deleted_at: text('deleted_at'),

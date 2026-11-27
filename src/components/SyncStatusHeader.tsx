@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
 import { Database, Info, Moon, Sun, SunMoon, X } from 'lucide-react-native';
 import { useAppStore } from '../store/useAppStore';
+import { formatDisplayDateTime } from '../utils/formatters';
 import { useThemeColors, useThemeStore } from '../theme/useTheme';
 
 interface SyncStatusHeaderProps {
@@ -104,7 +105,7 @@ export function SyncStatusHeader({ title, subtitle }: SyncStatusHeaderProps) {
 
           {lastSyncedAt ? (
             <Text className="text-[10.5px] font-mono tabular-nums text-zinc-400 dark:text-zinc-500 mt-2">
-              Segerak terakhir: {new Date(lastSyncedAt).toLocaleTimeString()}
+              Segerak terakhir: {formatDisplayDateTime(lastSyncedAt)}
             </Text>
           ) : null}
 

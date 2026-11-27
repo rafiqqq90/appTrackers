@@ -29,23 +29,37 @@ export const taskFolderRepository = {
   getAll(userId: string): TaskFolder[] {
     return readList<TaskFolder>(FOLDERS_KEY)
       .filter((f) => f.userId === userId && !f.deletedAt)
-      .sort((a, b) => a.name.localeCompare(b.name));
+      .map((f) => ({ ...f, sortOrder: typeof f.sortOrder === 'number' ? f.sortOrder : 0 }))
+      .sort((a, b) => {
+        if (a.sortOrder !== b.sortOrder) return a.sortOrder - b.sortOrder;
+        return a.name.localeCompare(b.name);
+      });
   },
 
   create(input: CreateTaskFolderInput): TaskFolder {
     const now = nowIsoUtc();
+    const parentId = input.parentId ?? null;
+    const all = readList<TaskFolder>(FOLDERS_KEY);
+    const siblings = all.filter(
+      (f) => f.userId === input.userId && !f.deletedAt && (f.parentId ?? null) === parentId
+    );
+    const nextSortOrder =
+      siblings.length > 0
+        ? Math.max(...siblings.map((s, idx) => (typeof s.sortOrder === 'number' ? s.sortOrder : idx))) + 1
+        : 0;
+
     const record: TaskFolder = {
       id: generateId(),
       userId: input.userId,
-      parentId: input.parentId ?? null,
+      parentId,
       name: input.name.trim(),
+      sortOrder: nextSortOrder,
       createdAt: now,
       updatedAt: now,
       deletedAt: null,
       isSynced: false,
     };
 
-    const all = readList<TaskFolder>(FOLDERS_KEY);
     all.push(record);
     writeList(FOLDERS_KEY, all);
     return record;
@@ -58,6 +72,24 @@ export const taskFolderRepository = {
         ? { ...f, name: input.name.trim(), updatedAt: now, isSynced: false }
         : f
     );
+    writeList(FOLDERS_KEY, all);
+  },
+
+  reorder(orderedIds: string[]): void {
+    const now = nowIsoUtc();
+    const orderMap = new Map<string, number>();
+    orderedIds.forEach((id, idx) => orderMap.set(id, idx));
+
+    const all = readList<TaskFolder>(FOLDERS_KEY).map((f) => {
+      const nextOrder = orderMap.get(f.id);
+      if (nextOrder === undefined) return f;
+      return {
+        ...f,
+        sortOrder: nextOrder,
+        updatedAt: now,
+        isSynced: false,
+      };
+    });
     writeList(FOLDERS_KEY, all);
   },
 
